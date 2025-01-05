@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    volumes:
+      - mongo-data:/data/db
+
+  server:
+    # Choose which Dockerfile to use based on the profile
+    build:
+      context: .
+      dockerfile: packages/user-server/Dockerfile # Default to production
+    container_name: nest-server
+    ports:
+      - "3000:3000"
+    environment:
+      MONGO_URI: "mongodb://root:pass@mongodb:27017/mydatabase?authSource=admin"
+    depends_on:
+      - mongodb
+    profiles:
+      - production
+
+  server-dev:
+    build:
+      context: .
+      dockerfile: packages/user-server/Dockerfile.dev # Development Dockerfile
+    container_name: nest-server-dev
+    ports:
+      - "3000:3000"
+    environment:
+      MONGO_URI: "mongodb://root:pass@mongodb:27017/mydatabase?authSource=admin"
+      NODE_ENV: "development"
+    volumes:
+      - .:/app # Mount the entire monorepo
+      - /app/node_modules # Prevent overwriting node_modules
+    depends_on:
+      - mongodb
+    command: npm run start:dev --workspace=@real-one-chess-king/user-server
+    profiles:
+      - development
+
+volumes:
+  mongo-data:
