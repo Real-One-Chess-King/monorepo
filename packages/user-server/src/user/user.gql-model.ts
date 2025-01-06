@@ -8,6 +8,12 @@ export class User {
   @Field({ nullable: false })
   email: string;
 
+  // @Field({ nullable: true })
+  // password: string;
+
+  // @Field({ nullable: true })
+  // salt: string;
+
   @Field({ nullable: false })
   nickname: string;
 

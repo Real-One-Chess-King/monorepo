@@ -9,10 +9,13 @@ export class User {
   // so you don't need to define `id` or `_id` unless you have a special use case.
 
   @Prop({ required: true })
-  email: string;
+  password: string;
 
   @Prop({ required: true })
-  nickname: string;
+  salt: string;
+
+  @Prop({ required: true, unique: true })
+  email: string;
 
   @Prop()
   firstName?: string;
