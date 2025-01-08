@@ -14,8 +14,8 @@ export class User {
   // @Field({ nullable: true })
   // salt: string;
 
-  @Field({ nullable: false })
-  nickname: string;
+  @Field({ nullable: true })
+  nickname?: string;
 
   @Field({ nullable: true })
   firstName?: string;

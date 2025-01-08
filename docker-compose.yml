@@ -12,12 +12,12 @@ services:
     volumes:
       - mongo-data:/data/db
 
-  server:
+  user-server:
     # Choose which Dockerfile to use based on the profile
     build:
       context: .
       dockerfile: packages/user-server/Dockerfile # Default to production
-    container_name: nest-server
+    container_name: user-server
     ports:
       - "3000:3000"
     env_file:
@@ -27,11 +27,11 @@ services:
     profiles:
       - production
 
-  server-dev:
+  user-server-dev:
     build:
       context: .
       dockerfile: packages/user-server/Dockerfile.dev # Development Dockerfile
-    container_name: nest-server-dev
+    container_name: user-server
     ports:
       - "3000:3000"
     env_file:

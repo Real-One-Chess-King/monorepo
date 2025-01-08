@@ -2,11 +2,14 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { User } from './user.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateUserDto } from './dto/user.create-dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class UserRepository {
@@ -16,6 +19,7 @@ export class UserRepository {
     const { password, email, salt } = createUserDto;
 
     const createdUser = new this.userModel({
+      id: randomUUID(),
       email,
       password,
       salt,
@@ -25,11 +29,10 @@ export class UserRepository {
     try {
       return await createdUser.save();
     } catch (error) {
-      console.error(error);
       if (error.code === 11000) {
-        // Duplicate email error
         throw new ConflictException('Email already exists');
       }
+      console.error(error);
       throw new InternalServerErrorException('Failed to create user');
     }
   }
@@ -44,5 +47,20 @@ export class UserRepository {
 
   async findByEmail(email: string): Promise<User | undefined> {
     return this.userModel.findOne({ email }).exec();
+  }
+
+  async updateByEmail(
+    email: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<User> {
+    const updatedUser = await this.userModel
+      .findOneAndUpdate({ email }, updateUserDto, { new: true })
+      .exec();
+
+    if (!updatedUser) {
+      throw new NotFoundException('User not found');
+    }
+
+    return updatedUser;
   }
 }

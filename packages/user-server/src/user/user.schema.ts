@@ -1,12 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { Statistics } from '../statistics/statistics.schema';
 
 export type UserDocument = HydratedDocument<User>;
 
 @Schema()
 export class User {
-  // Typically Mongoose sets its own _id field of type ObjectId automatically,
-  // so you don't need to define `id` or `_id` unless you have a special use case.
+  @Prop({ required: true })
+  id: string;
 
   @Prop({ required: true })
   password: string;
@@ -18,6 +19,9 @@ export class User {
   email: string;
 
   @Prop()
+  nickname?: string;
+
+  @Prop()
   firstName?: string;
 
   @Prop()
@@ -25,6 +29,14 @@ export class User {
 
   @Prop({ required: true })
   mmr: number;
-}
 
+  @Prop({ type: Statistics, default: () => ({}) })
+  statistics: Statistics;
+
+  @Prop({ type: [String], default: [] })
+  matchHistory: string[]; // Array of Match UUIDs
+}
 export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.index({ email: 1 }, { unique: true });
+UserSchema.index({ id: 1 }, { unique: true });

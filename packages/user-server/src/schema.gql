@@ -5,6 +5,7 @@
 type Mutation {
   signIn(signInInput: SignInInput!): Token!
   signUp(signUpInput: SignInInput!): Token!
+  updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
 type Query {
@@ -20,11 +21,17 @@ type Token {
   accessToken: String!
 }
 
+input UpdateUserInput {
+  firstName: String
+  lastName: String
+  nickname: String!
+}
+
 type User {
   email: String!
   firstName: String
   id: ID!
   lastName: String
   mmr: Int!
-  nickname: String!
+  nickname: String
 }
