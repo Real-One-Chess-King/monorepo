@@ -2,14 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type MatchGql {
+  pkey: ID!
+}
+
 type Mutation {
   signIn(signInInput: SignInInput!): Token!
   signUp(signUpInput: SignInInput!): Token!
-  updateUser(updateUserInput: UpdateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): UserGql!
 }
 
 type Query {
-  user(id: ID!): User!
+  user(pkey: String!): UserGql!
 }
 
 input SignInInput {
@@ -17,8 +21,18 @@ input SignInInput {
   password: String!
 }
 
+type StatisticsGql {
+  gamesPlayed: Int!
+  losses: Int!
+  lostPieces: Int!
+  pkey: ID!
+  stalemates: Int!
+  wins: Int!
+}
+
 type Token {
   accessToken: String!
+  pkey: String!
 }
 
 input UpdateUserInput {
@@ -27,11 +41,14 @@ input UpdateUserInput {
   nickname: String!
 }
 
-type User {
+type UserGql {
   email: String!
   firstName: String
-  id: ID!
   lastName: String
+  matchHistory: [MatchGql!]!
+  matchesHistory: Int!
   mmr: Int!
   nickname: String
+  pkey: String!
+  statistics: StatisticsGql!
 }

@@ -2,6 +2,9 @@ import { Prop, Schema } from '@nestjs/mongoose';
 
 @Schema()
 export class Statistics {
+  @Prop({ required: true })
+  pkey: string;
+
   @Prop({ default: 0 })
   gamesPlayed: number;
 
@@ -10,6 +13,9 @@ export class Statistics {
 
   @Prop({ default: 0 })
   losses: number;
+
+  @Prop({ default: 0 })
+  stalemates: number;
 
   @Prop({ default: 0 })
   lostPieces: number;

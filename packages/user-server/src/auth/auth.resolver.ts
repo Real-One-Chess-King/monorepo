@@ -1,5 +1,5 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { User } from '../user/user.gql-model';
+import { UserGql } from '../user/user.gql-model';
 import { plainToClass } from 'class-transformer';
 import { AuthService } from '../auth/auth.service';
 import { SignInInput } from './input/sign-in.input';
@@ -7,7 +7,7 @@ import { SignInDto } from './dto/sign-in.dto';
 import { TokenDto } from './dto/token.dto';
 import { Token } from './auth.schema';
 
-@Resolver(() => User)
+@Resolver(() => UserGql)
 export class AuthResolver {
   constructor(private authService: AuthService) {}
 

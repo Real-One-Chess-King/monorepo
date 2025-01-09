@@ -7,7 +7,7 @@ export type UserDocument = HydratedDocument<User>;
 @Schema()
 export class User {
   @Prop({ required: true })
-  id: string;
+  pkey: string;
 
   @Prop({ required: true })
   password: string;
@@ -34,9 +34,9 @@ export class User {
   statistics: Statistics;
 
   @Prop({ type: [String], default: [] })
-  matchHistory: string[]; // Array of Match UUIDs
+  matchesHistory: string[]; // Array of Match UUIDs
 }
 export const UserSchema = SchemaFactory.createForClass(User);
 
 UserSchema.index({ email: 1 }, { unique: true });
-UserSchema.index({ id: 1 }, { unique: true });
+UserSchema.index({ pkey: 1 }, { unique: true });

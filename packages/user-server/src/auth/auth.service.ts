@@ -4,6 +4,7 @@ import { JwtPayload } from './jwt.payload';
 import { hash, genSalt } from 'bcryptjs';
 import { UserRepository } from '../user/user.repository';
 import { SignInDto } from './dto/sign-in.dto';
+import { TokenDto } from './dto/token.dto';
 
 @Injectable()
 export class AuthService {
@@ -14,11 +15,11 @@ export class AuthService {
 
   // resolvers methods
 
-  async signUp(signUpDto: SignInDto): Promise<{ accessToken: string }> {
+  async signUp(signUpDto: SignInDto): Promise<TokenDto> {
     const { email, password } = signUpDto;
     const salt = await genSalt();
     const hashedPassword = await hash(password, salt);
-    await this.userRepository.create({
+    const { pkey } = await this.userRepository.create({
       email,
       password: hashedPassword,
       salt,
@@ -26,10 +27,11 @@ export class AuthService {
     const { accessToken } = await this.generateJwt({ email });
     return {
       accessToken,
+      pkey,
     };
   }
 
-  async singIn(signInDto: SignInDto): Promise<{ accessToken: string }> {
+  async singIn(signInDto: SignInDto): Promise<TokenDto> {
     const user = await this.userRepository.findByEmail(signInDto.email);
 
     if (!user) {
@@ -43,7 +45,7 @@ export class AuthService {
     const { accessToken } = await this.generateJwt({
       email: user.email,
     });
-    return { accessToken };
+    return { accessToken, pkey: user.pkey };
   }
 
   // utils

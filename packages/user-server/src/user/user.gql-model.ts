@@ -1,18 +1,14 @@
-import { Field, Int, ObjectType, ID } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { StatisticsGql } from '../statistics/statistics.gql-model';
+import { MatchGql } from '../match/match.gql-model';
 
 @ObjectType()
-export class User {
-  @Field(() => ID)
-  id: string;
+export class UserGql {
+  @Field(() => String, { nullable: false })
+  pkey: string;
 
   @Field({ nullable: false })
   email: string;
-
-  // @Field({ nullable: true })
-  // password: string;
-
-  // @Field({ nullable: true })
-  // salt: string;
 
   @Field({ nullable: true })
   nickname?: string;
@@ -25,4 +21,10 @@ export class User {
 
   @Field(() => Int, { nullable: false })
   mmr: number;
+
+  @Field(() => Int, { nullable: false })
+  statistics?: StatisticsGql;
+
+  @Field(() => Int, { nullable: false })
+  matchesHistory?: MatchGql[];
 }

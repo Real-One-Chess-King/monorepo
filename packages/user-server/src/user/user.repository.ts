@@ -19,11 +19,15 @@ export class UserRepository {
     const { password, email, salt } = createUserDto;
 
     const createdUser = new this.userModel({
-      id: randomUUID(),
+      pkey: randomUUID(),
       email,
       password,
       salt,
       mmr: 2000,
+      statistics: {
+        pkey: randomUUID(),
+      },
+      matchesHistory: [],
     });
 
     try {
@@ -41,8 +45,8 @@ export class UserRepository {
     return this.userModel.find().exec();
   }
 
-  async findOneById(id: string): Promise<User> {
-    return this.userModel.findById(id).exec();
+  async findOneById(pkey: string): Promise<User> {
+    return this.userModel.findOne({ pkey }).exec();
   }
 
   async findByEmail(email: string): Promise<User | undefined> {
@@ -52,9 +56,10 @@ export class UserRepository {
   async updateByEmail(
     email: string,
     updateUserDto: UpdateUserDto,
-  ): Promise<User> {
+  ): Promise<Omit<User, 'password' | 'salt' | 'matchesHistory'>> {
     const updatedUser = await this.userModel
       .findOneAndUpdate({ email }, updateUserDto, { new: true })
+      .select('-password -salt -matchesHistory')
       .exec();
 
     if (!updatedUser) {
