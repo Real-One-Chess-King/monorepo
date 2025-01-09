@@ -24,7 +24,7 @@ export class AuthService {
       password: hashedPassword,
       salt,
     });
-    const { accessToken } = await this.generateJwt({ email });
+    const { accessToken } = await this.generateJwt({ email, pkey });
     return {
       accessToken,
       pkey,
@@ -44,6 +44,7 @@ export class AuthService {
 
     const { accessToken } = await this.generateJwt({
       email: user.email,
+      pkey: user.pkey,
     });
     return { accessToken, pkey: user.pkey };
   }

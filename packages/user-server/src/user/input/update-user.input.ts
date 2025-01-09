@@ -5,7 +5,7 @@ import { IsString, IsOptional } from 'class-validator';
 export class UpdateUserInput {
   @Field()
   @IsString()
-  nickname: string;
+  nickName: string;
 
   @Field({ nullable: true })
   @IsOptional()

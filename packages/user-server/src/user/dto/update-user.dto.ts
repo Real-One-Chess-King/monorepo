@@ -2,7 +2,7 @@ import { InputType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateUserDto {
-  nickname: string;
+  nickName: string;
 
   firstName?: string;
 

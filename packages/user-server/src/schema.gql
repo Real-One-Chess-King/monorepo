@@ -38,7 +38,7 @@ type Token {
 input UpdateUserInput {
   firstName: String
   lastName: String
-  nickname: String!
+  nickName: String!
 }
 
 type UserGql {
@@ -48,7 +48,7 @@ type UserGql {
   matchHistory: [MatchGql!]!
   matchesHistory: Int!
   mmr: Int!
-  nickname: String
+  nickName: String
   pkey: String!
   statistics: StatisticsGql!
 }

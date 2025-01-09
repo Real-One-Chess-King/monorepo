@@ -4,7 +4,7 @@ export function getUserQuery(pkey: string) {
   user(pkey: $pkey) {
     pkey
     email
-    nickname
+    nickName
     firstName
     lastName
     mmr

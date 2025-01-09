@@ -31,7 +31,6 @@ export const startMongoContainer = async (): Promise<{ uri: string }> => {
 
   dotenv.config({ path: '.env.test' });
 
-  console.log(`MongoDB started at ${uri}`); // Log the URI for debugging
   process.env.MONGO_URI = uri;
   return { uri };
 };
@@ -42,6 +41,5 @@ export const startMongoContainer = async (): Promise<{ uri: string }> => {
 export const stopMongoContainer = async (): Promise<void> => {
   if (mongoContainer) {
     await mongoContainer.stop();
-    console.log('MongoDB container stopped.');
   }
 };

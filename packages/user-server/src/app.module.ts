@@ -38,6 +38,7 @@ import * as mongooseAutopopulate from 'mongoose-autopopulate'; // Import the plu
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
+      context: ({ req }) => ({ req }), // by default gql doesn include req and passport becomes broken
 
       // playground: process.env.NODE_ENV === 'production',
       // plugins:

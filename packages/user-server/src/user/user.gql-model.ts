@@ -11,7 +11,7 @@ export class UserGql {
   email: string;
 
   @Field({ nullable: true })
-  nickname?: string;
+  nickName?: string;
 
   @Field({ nullable: true })
   firstName?: string;

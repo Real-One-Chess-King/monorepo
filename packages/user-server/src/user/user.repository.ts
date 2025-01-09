@@ -45,7 +45,7 @@ export class UserRepository {
     return this.userModel.find().exec();
   }
 
-  async findOneById(pkey: string): Promise<User> {
+  async findByPkey(pkey: string): Promise<User | undefined> {
     return this.userModel.findOne({ pkey }).exec();
   }
 
@@ -53,12 +53,12 @@ export class UserRepository {
     return this.userModel.findOne({ email }).exec();
   }
 
-  async updateByEmail(
-    email: string,
+  async updateByPkey(
+    pkey: string,
     updateUserDto: UpdateUserDto,
   ): Promise<Omit<User, 'password' | 'salt' | 'matchesHistory'>> {
     const updatedUser = await this.userModel
-      .findOneAndUpdate({ email }, updateUserDto, { new: true })
+      .findOneAndUpdate({ pkey }, updateUserDto, { new: true })
       .select('-password -salt -matchesHistory')
       .exec();
 
