@@ -27,7 +27,7 @@ export class UserRepository {
       statistics: {
         pkey: randomUUID(),
       },
-      matchesHistory: [],
+      match: [],
     });
 
     try {
@@ -46,9 +46,13 @@ export class UserRepository {
   }
 
   async findByPkey(pkey: string): Promise<User | undefined> {
-    return this.userModel.findOne({ pkey }).exec();
+    return this.userModel.findOne({ pkey }).select('-password -salt').exec();
   }
 
+  /**
+   * should be used only for login
+   * because it returns user with password and salt
+   */
   async findByEmail(email: string): Promise<User | undefined> {
     return this.userModel.findOne({ email }).exec();
   }
@@ -56,10 +60,10 @@ export class UserRepository {
   async updateByPkey(
     pkey: string,
     updateUserDto: UpdateUserDto,
-  ): Promise<Omit<User, 'password' | 'salt' | 'matchesHistory'>> {
+  ): Promise<Omit<User, 'password' | 'salt' | 'match'>> {
     const updatedUser = await this.userModel
       .findOneAndUpdate({ pkey }, updateUserDto, { new: true })
-      .select('-password -salt -matchesHistory')
+      .select('firstName lastName nickName pkey')
       .exec();
 
     if (!updatedUser) {

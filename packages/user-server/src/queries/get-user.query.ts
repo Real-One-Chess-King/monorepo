@@ -14,6 +14,10 @@ export function getUserQuery(pkey: string) {
       losses
       lostPieces
     }
+    match {
+      pkey
+      name
+    }
   }
 }`,
     variables: {

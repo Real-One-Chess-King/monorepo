@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { Statistics } from '../statistics/statistics.schema';
 
 export type UserDocument = HydratedDocument<User>;
@@ -15,7 +15,7 @@ export class User {
   @Prop({ required: true })
   salt: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true })
   email: string;
 
   @Prop()
@@ -33,10 +33,13 @@ export class User {
   @Prop({ type: Statistics, default: () => ({}) })
   statistics: Statistics;
 
-  @Prop({ type: [String], default: [] })
-  matchesHistory: string[]; // Array of Match UUIDs
+  @Prop({
+    type: [{ type: Types.ObjectId, ref: 'Match' }],
+    default: [],
+  })
+  match: Types.ObjectId[];
 }
 export const UserSchema = SchemaFactory.createForClass(User);
 
-UserSchema.index({ email: 1 }, { unique: true });
 UserSchema.index({ pkey: 1 }, { unique: true });
+UserSchema.index({ email: 1 }, { unique: true });

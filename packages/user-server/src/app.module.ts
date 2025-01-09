@@ -22,7 +22,6 @@ import * as mongooseAutopopulate from 'mongoose-autopopulate'; // Import the plu
   imports: [
     ConfigModule.forRoot({
       isGlobal: true, // Makes ConfigModule available globally without importing it in other modules
-      // envFilePath: dotenvFileName, // Path to the .env file
       ignoreEnvFile: true,
       // validationSchema: Joi.object({
       //   PORT: Joi.number().default(3000),
@@ -39,22 +38,17 @@ import * as mongooseAutopopulate from 'mongoose-autopopulate'; // Import the plu
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
       context: ({ req }) => ({ req }), // by default gql doesn include req and passport becomes broken
-
-      // playground: process.env.NODE_ENV === 'production',
-      // plugins:
-      //   process.env.NODE_ENV !== 'production'
-      //     ? [ApolloServerPluginLandingPageLocalDefault()]
-      //     : [],
       playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      plugins:
+        process.env.NODE_ENV === 'production'
+          ? [ApolloServerPluginLandingPageLocalDefault()]
+          : [],
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         return {
           uri: configService.get<string>('MONGO_URI'),
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
           autoIndex: true,
           connectionFactory: (connection) => {
             connection.plugin(mongooseAutopopulate); // Apply the autopopulate plugin

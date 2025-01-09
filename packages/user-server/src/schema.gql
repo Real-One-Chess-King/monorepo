@@ -3,7 +3,8 @@
 # ------------------------------------------------------
 
 type MatchGql {
-  pkey: ID!
+  name: String!
+  pkey: String!
 }
 
 type Mutation {
@@ -45,8 +46,7 @@ type UserGql {
   email: String!
   firstName: String
   lastName: String
-  matchHistory: [MatchGql!]!
-  matchesHistory: Int!
+  match: [MatchGql!]!
   mmr: Int!
   nickName: String
   pkey: String!

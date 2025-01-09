@@ -22,9 +22,9 @@ export class UserGql {
   @Field(() => Int, { nullable: false })
   mmr: number;
 
-  @Field(() => Int, { nullable: false })
+  @Field(() => StatisticsGql, { nullable: false })
   statistics?: StatisticsGql;
 
-  @Field(() => Int, { nullable: false })
-  matchesHistory?: MatchGql[];
+  @Field(() => [MatchGql!]!, { nullable: false })
+  match?: MatchGql[];
 }

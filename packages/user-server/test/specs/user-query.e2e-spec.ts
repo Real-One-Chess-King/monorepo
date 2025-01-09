@@ -53,6 +53,7 @@ describe('User resolver > get user', () => {
       losses: 0,
       lostPieces: 0,
     });
+    expect(user.match).toEqual([]);
   });
 
   it('should return not found when pkey is invalid', async () => {

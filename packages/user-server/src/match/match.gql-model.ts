@@ -1,7 +1,10 @@
-import { Field, ObjectType, ID } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class MatchGql {
-  @Field(() => ID, { nullable: false })
+  @Field(() => String, { nullable: false })
   pkey: string;
+
+  @Field({ nullable: false })
+  name: string;
 }

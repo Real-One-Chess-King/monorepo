@@ -44,11 +44,6 @@ export class UserResolver {
     return user;
   }
 
-  // @Query(() => UserGql)
-  // async userByEmail(@Args('email', { type: () => String }) email: string) {
-  //   return this.userRepository.findByEmail(email);
-  // }
-
   @ResolveField(() => StatisticsGql, { name: 'statistics' })
   async resolveStatistics(
     @Parent() user: UserDocument,
@@ -56,9 +51,14 @@ export class UserResolver {
     return user.statistics;
   }
 
-  @ResolveField(() => [MatchGql], { name: 'matchHistory' })
-  async matchHistory(@Parent() user: UserDocument): Promise<MatchGql[]> {
-    // user.matchHistory is an array of match UUIDs
-    return []; // this.matchService.findByUUIDs(user.matchesHistory);
+  @ResolveField(() => [MatchGql], { name: 'match' })
+  async match(@Parent() user: UserDocument): Promise<MatchGql[]> {
+    return !user.match.length
+      ? []
+      : user.populate({
+          path: 'match',
+          // match: { name: /Chess/i }, // TODO add search by replay name one day
+          options: { limit: 10, skip: 0 }, // TODO add correct pagination
+        });
   }
 }
