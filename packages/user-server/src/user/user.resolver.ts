@@ -1,6 +1,5 @@
 import {
   Args,
-  ID,
   Mutation,
   Parent,
   Query,
@@ -10,7 +9,7 @@ import {
 import { UserGql } from './user.gql-model';
 import { UserRepository } from './user.repository';
 import { AuthGuard } from '@nestjs/passport';
-import { UseGuards } from '@nestjs/common';
+import { NotFoundException, UseGuards } from '@nestjs/common';
 import { UpdateUserInput } from './input/update-user.input';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { plainToClass } from 'class-transformer';
@@ -39,7 +38,11 @@ export class UserResolver {
 
   @Query(() => UserGql)
   async user(@Args('pkey', { type: () => String }) pkey: string) {
-    return this.userRepository.findOneById(pkey);
+    const user = await this.userRepository.findOneById(pkey);
+    if (!user) {
+      throw new NotFoundException(`User not found`);
+    }
+    return user;
   }
 
   // @Query(() => UserGql)

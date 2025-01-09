@@ -24,9 +24,9 @@ describe('User resolver > get self user', () => {
     await app.close();
   });
 
-  it('should return user from', async () => {
+  it('should return user by pkey', async () => {
     const { email, password } = generateSignInInput();
-    const { accessToken, pkey } = await app.get(AuthService).signUp({
+    const { pkey } = await app.get(AuthService).signUp({
       email,
       password,
     });
@@ -35,7 +35,7 @@ describe('User resolver > get self user', () => {
 
     const response = await request(app.getHttpServer())
       .post('/graphql')
-      .set('Authorization', `Bearer ${accessToken}`)
+      // .set('Authorization', `Bearer ${accessToken}`)
       .send({
         query,
         variables,
@@ -54,5 +54,22 @@ describe('User resolver > get self user', () => {
       losses: 0,
       lostPieces: 0,
     });
+  });
+
+  it('should return not found when pkey is invalid', async () => {
+    const { query, variables } = getUserQuery('pkey');
+
+    const response = await request(app.getHttpServer())
+      .post('/graphql')
+      .send({
+        query,
+        variables,
+      })
+      .expect(200);
+
+    const body = response.body;
+    console.log(body);
+    expect(body).toHaveProperty('errors');
+    expect(body.errors[0].message).toEqual('User not found');
   });
 });
