@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { UpdateUserInput } from 'src/user/input/update-user.input';
+import { UpdateUserInput } from '../input/update-user.input';
 
 export function generateUpdateUserInput(
   nickName?: string,

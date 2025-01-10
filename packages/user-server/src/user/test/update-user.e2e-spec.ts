@@ -1,11 +1,11 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppModule } from '../../src/app.module';
+import { AppModule } from '../../app.module';
 import * as request from 'supertest';
-import { AuthService } from '../../src/auth/auth.service';
-import { generateSignInInput } from '../factory/sign-in.input.factory';
+import { AuthService } from '../../auth/auth.service';
+import { generateSignInInput } from '../../auth/factory/sign-in.input.factory';
 import { generateUpdateUserInput } from '../factory/user.input.factory';
-import { updateUserMutation } from '../../src/queries/update-user.mutation';
+import { updateUserMutation } from '../../queries/update-user.mutation';
 
 jest.setTimeout(5 * 60 * 1000);
 
