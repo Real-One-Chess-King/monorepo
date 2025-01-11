@@ -1,7 +1,7 @@
 {
-  "name": "real-one-chess-king",
+  "name": "real_one_chess_king",
   "version": "1.0.0",
-  "description": "",
+  "description": "Chess platform",
   "private": true,
   "workspaces": [
     "packages/*"

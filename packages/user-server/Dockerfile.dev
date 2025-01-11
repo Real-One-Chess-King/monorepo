@@ -31,5 +31,5 @@
   ENV NODE_ENV=development
   
   # Command to run the server in development mode with hot reloading
-  CMD ["nodemon", "--watch", "packages/user-server/src", "--exec", "npm run start:dev --workspace=@real-one-chess-king/user-server"]
+  CMD ["nodemon", "--watch", "packages/user-server/src", "--exec", "npm run start:dev --workspace=@real_one_chess_king/user-server"]
   

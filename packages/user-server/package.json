@@ -1,8 +1,8 @@
 {
-  "name": "@real-one-chess-king/user-server",
+  "name": "@real_one_chess_king/user-server",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Eugene Perminov",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {

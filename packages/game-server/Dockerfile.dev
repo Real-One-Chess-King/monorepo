@@ -1,0 +1,35 @@
+# -----------------------
+# Development Stage
+# -----------------------
+  FROM node:20-alpine
+
+  # Install dependencies for building native modules (if needed)
+  RUN apk add --no-cache bash
+  
+  # Create a working directory inside the container
+  WORKDIR /app
+  
+  # Copy the root package files (for npm workspaces)
+  COPY package.json package-lock.json ./
+  
+  # Copy the server package.json
+  COPY packages/user-server/package.json packages/game-server/
+  
+  # Install dependencies (including devDependencies)
+  RUN npm install
+  
+  # Copy all source code into the container
+  COPY . .
+  
+  # Install nodemon globally for hot reloading
+  RUN npm install -g nodemon
+  
+  # Expose NestJS port
+  # EXPOSE 3000
+  
+  # Set environment variable to development
+  ENV NODE_ENV=development
+  
+  # Command to run the server in development mode with hot reloading
+  CMD ["nodemon", "--watch", "packages/user-server/src", "--exec", "npm run start:dev --workspace=@real_one_chess_king/user-server"]
+  

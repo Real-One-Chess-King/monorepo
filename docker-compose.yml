@@ -41,7 +41,7 @@ services:
       - /app/node_modules # Prevent overwriting node_modules
     depends_on:
       - mongodb
-    command: npm run start:dev --workspace=@real-one-chess-king/user-server
+    command: npm run start:dev --workspace=@real_one_chess_king/user-server
     profiles:
       - development
 
