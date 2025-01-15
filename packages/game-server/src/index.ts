@@ -6,21 +6,24 @@ import {
   WSClientGameEvent,
   WSServerGameEvent,
 } from "@real_one_chess_king/game-logic";
+import { config } from "./env.config";
 
 const io = new Server({
   cors: {
-    origin: "http://localhost:3000",
+    origin: process.env.FRONT_END_URL, // TODO update for prod before release
     methods: ["GET", "POST"],
   },
   // key: readFileSync("/path/to/my/key.pem"),
   // cert: readFileSync("/path/to/my/cert.pem")
 });
 
+console.log("hey 1 2 3");
+
 const matchmaker = new Matchmaker();
 
 const gameMachines: GameMachine[] = []; // better structure is needed
 io.on("connection", (socket) => {
-  console.log("connected", socket.id);
+  console.log("connected 2 ", socket.id);
   socket.on(WSClientGameEvent.FindGame, (data) => {
     console.log("on find game event");
     const player = new Player(data.name);
@@ -60,5 +63,5 @@ io.on("connection", (socket) => {
   });
 });
 
-io.listen(4000);
-console.log("Listening 4000");
+io.listen(config.port);
+console.log(`Listening ${config.port}`);

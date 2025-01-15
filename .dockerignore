@@ -1,0 +1,10 @@
+node_modules
+packages/*/node_modules
+packages/*/dist
+node_modules
+.git
+.gitignore
+*.md
+dist
+packages/game-logic/node_modules
+packages/game-server/node_modules

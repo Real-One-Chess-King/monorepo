@@ -9,27 +9,27 @@
   # Create a working directory inside the container
   WORKDIR /app
   
-  # Copy the root package files (for npm workspaces)
-  COPY package.json package-lock.json ./
-  
+  # Copy the root package files (for pnpm workspaces)
+  # COPY package.json package-lock.json ./
+  COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+
   # Copy the server package.json
-  COPY packages/user-server/package.json packages/user-server/
-  
+  # COPY packages/front-end/package.json packages/front-end/
+  RUN mkdir -p packages/front-end
+  RUN mkdir -p packages/game-logic
+
+  # COPY .env packages/front-end/.env
+  COPY packages/front-end/package.json packages/front-end/package.json
+  COPY packages/game-logic/package.json packages/game-logic/package.json
+  COPY packages/front-end/tsconfig.base.json packages/front-end/tsconfig.base.json
+  COPY packages/front-end/tsconfig.dev.json packages/front-end/tsconfig.dev.json
+  COPY packages/front-end/next.config.ts packages/front-end/next.config.ts
+  COPY packages/front-end/postcss.config.mjs packages/front-end/postcss.config.mjs
+  COPY packages/front-end/tailwind.config.ts packages/front-end/tailwind.config.ts
+
+  RUN npm i pnpm -g
+
   # Install dependencies (including devDependencies)
-  RUN npm install
-  
-  # Copy all source code into the container
-  COPY . .
-  
-  # Install nodemon globally for hot reloading
-  RUN npm install -g nodemon
-  
-  # Expose NestJS port
-  EXPOSE 3000
-  
-  # Set environment variable to development
-  ENV NODE_ENV=development
-  
-  # Command to run the server in development mode with hot reloading
-  CMD ["nodemon", "--watch", "packages/user-server/src", "--exec", "npm run start:dev --workspace=@real_one_chess_king/user-server"]
-  
+  RUN pnpm install
+    
+  # RUN pnpm deploy --filter=front-end /packages/front-end

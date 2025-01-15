@@ -14,7 +14,7 @@ export enum WSServerGameEvent {
   OpponentTimeOut = "opponent_time_out",
   YourTimeOut = "your_time_out",
   YouWon = "you_won",
-  GameStarted = "game_starterd",
+  GameStarted = "game_started",
   WaitingForOpponent = "waiting_for_opponent",
   Stalemate = "stalemate",
 }

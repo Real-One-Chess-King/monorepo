@@ -12,20 +12,23 @@ services:
     volumes:
       - mongo-data:/data/db
 
-  user-server:
-    # Choose which Dockerfile to use based on the profile
-    build:
-      context: .
-      dockerfile: packages/user-server/Dockerfile # Default to production
-    container_name: user-server
-    ports:
-      - "3000:3000"
-    env_file:
-      - ./packages/user-server/.env
-    depends_on:
-      - mongodb
-    profiles:
-      - production
+  # USER SERVER
+
+  # user-server:
+  #   # Choose which Dockerfile to use based on the profile
+  #   build:
+  #     context: .
+  #     dockerfile: packages/user-server/Dockerfile # Default to production
+  #   container_name: user-server
+  #   ports:
+  #     - "3000:3000"
+  #   # env_file:
+  #   # - ./packages/user-server/.env
+  #   # - ./.env
+  #   depends_on:
+  #     - mongodb
+  #   profiles:
+  #     - production
 
   user-server-dev:
     build:
@@ -33,17 +36,73 @@ services:
       dockerfile: packages/user-server/Dockerfile.dev # Development Dockerfile
     container_name: user-server
     ports:
-      - "3000:3000"
+      - "${USER_SERVER_PORT}:${USER_SERVER_PORT}"
     env_file:
       - ./packages/user-server/.env
+      - ./.env
     volumes:
-      - .:/app # Mount the entire monorepo
-      - /app/node_modules # Prevent overwriting node_modules
+      - ./packages/user-server/src:/app/packages/user-server/src
+      - ./packages/game-logic/src:/app/packages/game-logic/src
+      - user_server_node_modules:/app/packages/user-server/node_modules
+      - game_logic_node_modules:/app/packages/game-logic/node_modules
     depends_on:
       - mongodb
     command: npm run start:dev --workspace=@real_one_chess_king/user-server
     profiles:
       - development
+
+  # GAME SERVER
+
+  game-server-dev:
+    build:
+      context: .
+      dockerfile: packages/game-server/Dockerfile.dev # Development Dockerfile
+    container_name: game-server
+    ports:
+      - "${GAME_SERVER_PORT}:${GAME_SERVER_PORT}"
+    env_file:
+      - ./packages/game-server/.env
+      - ./.env
+    volumes:
+      - ./packages/game-server/src:/app/packages/game-server/src
+      - ./packages/game-logic/src:/app/packages/game-logic/src
+      - game_server_node_modules:/app/packages/game-server/node_modules
+      - game_logic_node_modules:/app/packages/game-logic/node_modules
+    depends_on:
+      - mongodb
+    command: pnpm start:dev:game-server
+    # command: tail -f /dev/null
+    #
+    # command: npm run start:dev --workspace=@real_one_chess_king/game-server
+    profiles:
+      - development
+
+    # GAME SERVER
+
+  front-end-dev:
+    build:
+      context: .
+      dockerfile: packages/front-end/Dockerfile.dev # Development Dockerfile
+    container_name: front-end
+    ports:
+      - "${FRONT_END_PORT}:${FRONT_END_PORT}"
+    volumes:
+      - ./packages/front-end/src:/app/packages/front-end/src
+      - ./packages/game-logic/src:/app/packages/game-logic/src
+      # - ./packages/game-logic/config:/app/packages/game-logic/config
+      - front_end_node_modules:/app/packages/front=end/node_modules
+      - game_logic_node_modules:/app/packages/game-logic/node_modules
+
+    env_file:
+      - ./.env
+      # - ./packages/front-end/.env
+    command: pnpm run start:dev:front-end
+    #
+    # command: npm run start:dev --workspace=@real_one_chess_king/game-server
+    profiles:
+      - development
+
+  # MONGO EXPRESS
 
   mongo-express:
     image: mongo-express:latest
@@ -60,3 +119,7 @@ services:
 
 volumes:
   mongo-data:
+  game_server_node_modules:
+  user_server_node_modules:
+  game_logic_node_modules:
+  front_end_node_modules:

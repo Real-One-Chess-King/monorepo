@@ -39,6 +39,7 @@ import * as mongooseAutopopulate from 'mongoose-autopopulate'; // Import the plu
       sortSchema: true,
       context: ({ req }) => ({ req }), // by default gql doesn include req and passport becomes broken
       playground: false,
+      // csrfPrevention: false, // Enable CSRF prevention
       plugins:
         process.env.NODE_ENV === 'production'
           ? [ApolloServerPluginLandingPageLocalDefault()]

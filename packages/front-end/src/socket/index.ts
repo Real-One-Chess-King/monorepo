@@ -10,16 +10,18 @@ let socket: Socket;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Listener = (...args: any[]) => void;
 
+console.log(process.env);
+
 class WSClient {
   connect() {
     return new Promise<void>((resolve) => {
       const URL =
         process.env.NODE_ENV === "production"
           ? undefined
-          : "http://localhost:4000";
+          : process.env.GAME_SERVER_URL;
       socket = io(URL);
 
-      console.log("begin conection");
+      console.log("begin conection!");
       socket.on("connect", () => {
         console.log("connected");
         resolve();
@@ -30,6 +32,7 @@ class WSClient {
   // subs and unsubs
 
   subscribeOnGameStarted(onGameStarted: Listener) {
+    console.log(WSServerGameEvent.GameStarted);
     socket.on(WSServerGameEvent.GameStarted, onGameStarted);
   }
   unsubscribeOnGameStarted(onGameStarted: Listener) {

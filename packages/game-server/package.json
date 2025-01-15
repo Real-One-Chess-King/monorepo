@@ -3,12 +3,15 @@
   "version": "1.0.2",
   "description": "",
   "scripts": {
+    "prestart": "pnpm build:dev",
     "start": "node dist/index.js",
     "clean": "rimraf dist",
-    "build": "npm run clean && tsc",
-    "dev": "tsx watch ./src/index.ts",
-    "pretest": "npm run clean",
-    "test": "jest",
+    "build": "pnpm clean && tsc",
+    "build:dev": "pnpm clean && tsc --project tsconfig.dev.json",
+    "start:dev": "nodemon",
+    "start:dev-oldf": "tsx src/index",
+    "pretest": "pnpm clean",
+    "test": "echo no tests yet",
     "eslint": "npx eslint 'src/**/*.ts'"
   },
   "author": "Eugene Perminov",
@@ -26,17 +29,20 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-promise": "^6.6.0",
     "globals": "^15.14.0",
+    "nodemon": "^3.1.9",
     "prettier": "3.4.2",
     "rimraf": "^6.0.1",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.19.0"
   },
   "dependencies": {
-    "@real_one_chess_king/game-logic": "^0.2.2",
+    "@real_one_chess_king/game-logic": "^0.2.3",
+    "latest": "link:@real_one_chess_king@game-logic/latest",
     "socket.io": "^4.8.1"
   },
   "optionalDependencies": {

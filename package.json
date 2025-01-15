@@ -3,8 +3,19 @@
   "version": "1.0.0",
   "description": "Chess platform",
   "private": true,
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "prestart:dev:game-server1": "pnpm build --filter=@real_one_chess_king/game-logic",
+    "start:dev:game-server": "pnpm --filter=@real_one_chess_king/game-server start:dev",
+    "test:game-server": "pnpm --filter=@real_one_chess_king/game-server test",
+    "start:dev:front-end": "pnpm --filter=@real_one_chess_king/front-end start:dev",
+    "start:dev:user-server": "pnpm --filter=@real_one_chess_king/user-server start:dev"
+  },
   "workspaces": [
     "packages/*"
   ],
-  "author": "Eugene Perminov"
+  "author": "Eugene Perminov",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
 }

@@ -2,6 +2,3 @@
 /dist
 .vscode
 coverage/
-shared/dist/
-shared/node_modules/
-shared/dist

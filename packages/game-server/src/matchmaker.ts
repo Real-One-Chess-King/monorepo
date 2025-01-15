@@ -46,7 +46,8 @@ export class Matchmaker {
 
     const defaultGloobalRules = this.gameInitializer.getDefaultGlobalRules();
 
-    const fifteenMinutes = 5 * 1000; // 45 * 60 *;
+    const fifteenMinutes = 45 * 60 * 1000;
+    // const fifteenMinutes = 5 * 1000; // debug thing
 
     return {
       game: new Game(

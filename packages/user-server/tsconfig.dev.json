@@ -2,7 +2,6 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"],
       "@real_one_chess_king/game-logic": ["../game-logic/src/index"]
     }
   }
