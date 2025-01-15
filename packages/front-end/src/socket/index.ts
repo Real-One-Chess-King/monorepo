@@ -10,8 +10,6 @@ let socket: Socket;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Listener = (...args: any[]) => void;
 
-console.log(process.env);
-
 class WSClient {
   connect() {
     return new Promise<void>((resolve) => {
@@ -32,7 +30,6 @@ class WSClient {
   // subs and unsubs
 
   subscribeOnGameStarted(onGameStarted: Listener) {
-    console.log(WSServerGameEvent.GameStarted);
     socket.on(WSServerGameEvent.GameStarted, onGameStarted);
   }
   unsubscribeOnGameStarted(onGameStarted: Listener) {

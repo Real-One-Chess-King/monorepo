@@ -17,8 +17,6 @@ const io = new Server({
   // cert: readFileSync("/path/to/my/cert.pem")
 });
 
-console.log("hey 1 2 3");
-
 const matchmaker = new Matchmaker();
 
 const gameMachines: GameMachine[] = []; // better structure is needed

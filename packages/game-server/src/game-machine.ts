@@ -83,7 +83,6 @@ export class GameMachine {
     for (const color of Object.values(Color)) {
       const boardMeta = this.game.getBoardMeta();
       const gameInfo = this.game.getNewGameInfoForColor(color);
-      console.log(WSServerGameEvent.GameStarted);
       this.sockets[color].emit(WSServerGameEvent.GameStarted, {
         boardMeta,
         gameInfo,
@@ -93,7 +92,6 @@ export class GameMachine {
   }
 
   private onTimeStart = () => {
-    console.log("onTimeStart");
     this.isGameStarted = true;
   };
 
@@ -116,7 +114,6 @@ export class GameMachine {
 
   private handleTurn(color: Color, turn: Turn) {
     try {
-      console.log(turn);
       const gameResult = this.game.processTurn(turn);
       if (gameResult) {
         let messageForBlack = WSServerGameEvent.Stalemate;
