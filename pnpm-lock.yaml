@@ -63,6 +63,9 @@ importers:
       '@eslint/js':
         specifier: ^9.17.0
         version: 9.18.0
+      '@jest/globals':
+        specifier: ^29.7.0
+        version: 29.7.0
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -5900,7 +5903,7 @@ snapshots:
     dependencies:
       '@jest/fake-timers': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 22.10.5
+      '@types/node': 20.17.12
       jest-mock: 29.7.0
 
   '@jest/expect-utils@29.7.0':
@@ -8959,7 +8962,7 @@ snapshots:
   jest-mock@29.7.0:
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 22.10.5
+      '@types/node': 20.17.12
       jest-util: 29.7.0
 
   jest-pnp-resolver@1.2.3(jest-resolve@29.7.0):

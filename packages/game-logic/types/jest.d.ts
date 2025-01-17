@@ -1,5 +1,5 @@
 import "jest";
-import { Action } from "../shared/src/chess/affect/affect.types";
+import { Action } from "../src/chess/affect/affect.types";
 
 declare global {
   namespace jest {

@@ -1,7 +1,6 @@
 import { PieceType } from "../../piece/piece.constants";
 import { Color } from "../../color";
 import { Board } from "../../board/board";
-import { GameInitializer, Position } from "../../../../../src/game-initializer";
 import { MovesTree } from "../moves-tree";
 // import { printCells } from "../../../utils/board-printer";
 import {
@@ -11,6 +10,10 @@ import {
 import * as fs from "fs";
 import { buildMoveAffect, markAsUserSelected } from "../../affect/affect.utils";
 import { Turn } from "../../turn";
+import {
+  GameInitializer,
+  Position,
+} from "../../../../../game-server/src/game-initializer";
 
 /**
  * Writes a given object to a file as JSON using callback-based fs methods.

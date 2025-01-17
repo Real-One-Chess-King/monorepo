@@ -5,11 +5,18 @@
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "prestart:dev:game-server1": "pnpm build --filter=@real_one_chess_king/game-logic",
     "start:dev:game-server": "pnpm --filter=@real_one_chess_king/game-server start:dev",
-    "test:game-server": "pnpm --filter=@real_one_chess_king/game-server test",
     "start:dev:front-end": "pnpm --filter=@real_one_chess_king/front-end start:dev",
-    "start:dev:user-server": "pnpm --filter=@real_one_chess_king/user-server start:dev"
+    "start:dev:user-server": "pnpm --filter=@real_one_chess_king/user-server start:dev",
+    "build:game-server": "pnpm --filter=@real_one_chess_king/game-server build",
+    "build:front-end": "pnpm --filter=@real_one_chess_king/front-end build",
+    "build:user-server": "pnpm --filter=@real_one_chess_king/user-server build",
+    "build:game-logic": "pnpm --filter=@real_one_chess_king/game-logic build",
+    "test:game-server": "pnpm --filter=@real_one_chess_king/game-server test",
+    "test:front-end": "pnpm --filter=@real_one_chess_king/front-end test",
+    "test:user-server": "pnpm --filter=@real_one_chess_king/user-server test",
+    "test:game-logic": "pnpm --filter=@real_one_chess_king/game-logic test",
+    "test:all": "concurrently \"pnpm test:game-server\" \"pnpm test:front-end\" \"pnpm test:user-server\" \"pnpm test:game-logic\""
   },
   "workspaces": [
     "packages/*"

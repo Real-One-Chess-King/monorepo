@@ -1,5 +1,5 @@
-import { Action } from "@real_one_chess_king/game-logic";
-import { isAffectEql } from "@real_one_chess_king/game-logic";
+import { Action } from "../src/chess/affect/affect.types";
+import { isAffectEql } from "../src/utils";
 
 export const toMatchActions = (received: Action[], expected: Action[]) => {
   const errors: string[] = [];
