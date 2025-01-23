@@ -1,6 +1,6 @@
 import { Coordinate } from "../coordinate";
 import { Board } from "../board/board";
-import { GameInitializer, Position } from "../../../../src/game-initializer";
+import { GameInitializer, Position } from "../game-initializer";
 import { Color } from "../color";
 import { PieceType } from "../piece/piece.constants";
 import {

@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
 import { Board } from "@real_one_chess_king/game-logic";
 import { Game, Player } from "@real_one_chess_king/game-logic";
-import { GameInitializer } from "./game-initializer";
+import { GameInitializer } from "../../game-logic/src/chess/game-initializer"; // this thhing will be refactored
 import { Color } from "@real_one_chess_king/game-logic";
 
 type QueueItem = {

@@ -1,13 +1,14 @@
-import { Coordinate, RuleMeta } from "@real_one_chess_king/game-logic";
-import { Board } from "@real_one_chess_king/game-logic";
-import { BoardMeta } from "@real_one_chess_king/game-logic";
-import { Color } from "@real_one_chess_king/game-logic";
-import { PieceMeta } from "@real_one_chess_king/game-logic";
-import { PieceType } from "@real_one_chess_king/game-logic";
-import { CheckMateGlobalRule } from "@real_one_chess_king/game-logic";
 import { randomUUID } from "crypto";
+import { RuleMeta } from "./rules/piece-movement/rules";
+import { Board } from "./board";
+import { BoardMeta } from "./board";
+import { PieceMeta } from "./piece/piece.types";
+import { CheckMateGlobalRule } from "./rules/global/check-mate.global-rule";
 import { RulesRepository } from "./rules.repository";
-import { PostMovementRuleMeta } from "@real_one_chess_king/game-logic";
+import { PostMovementRuleMeta } from "./rules/piece-post-movement";
+import { Coordinate } from "./coordinate";
+import { Color } from "./color";
+import { PieceType } from "./piece/piece.constants";
 
 export type Position = {
   [key in Color]: { type: PieceType; coordinate: Coordinate }[];

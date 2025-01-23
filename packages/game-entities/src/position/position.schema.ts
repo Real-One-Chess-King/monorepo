@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { MatchType } from '../consts';
-// import { Color } from '@real_one_chess_king/game-logic';
+import { Color } from '@real_one_chess_king/game-logic';
 import { PositionConfig } from '../position-config/position.schema';
 
 export type PositionDocument = HydratedDocument<Position>;
@@ -14,8 +14,8 @@ export class Position {
   @Prop({ required: true })
   name: string;
 
-  // @Prop({ required: true })
-  // color: Color;
+  @Prop({ required: true })
+  color: Color;
 
   @Prop({ required: true })
   matchType: MatchType;

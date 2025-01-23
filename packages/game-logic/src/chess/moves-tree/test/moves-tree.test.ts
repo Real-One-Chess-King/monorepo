@@ -10,10 +10,7 @@ import {
 import * as fs from "fs";
 import { buildMoveAffect, markAsUserSelected } from "../../affect/affect.utils";
 import { Turn } from "../../turn";
-import {
-  GameInitializer,
-  Position,
-} from "../../../../../game-server/src/game-initializer";
+import { GameInitializer, Position } from "../../game-initializer";
 
 /**
  * Writes a given object to a file as JSON using callback-based fs methods.

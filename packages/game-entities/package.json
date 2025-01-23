@@ -1,7 +1,7 @@
 {
-  "name": "@real_one_chess_king/game-logic",
-  "version": "0.2.3",
-  "description": "R.O.C.K. chess game logic",
+  "name": "@real_one_chess_king/game-entities",
+  "version": "0.1.0",
+  "description": "R.O.C.K. chess game entities",
   "keywords": [
     "chess",
     "game",

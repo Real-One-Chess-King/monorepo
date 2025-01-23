@@ -85,7 +85,7 @@ services:
       dockerfile: packages/front-end/Dockerfile.dev # Development Dockerfile
     container_name: front-end
     ports:
-      - "${FRONT_END_PORT}:${FRONT_END_PORT}"
+      - "${FRONT_END_PORT}:3000"
     volumes:
       - ./packages/front-end/src:/app/packages/front-end/src
       - ./packages/game-logic/src:/app/packages/game-logic/src

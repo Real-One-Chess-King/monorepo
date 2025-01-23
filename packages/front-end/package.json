@@ -5,15 +5,19 @@
   "scripts": {
     "start:dev": "cp tsconfig.dev.json tsconfig.json && next dev && PORT=8080 next dev",
     "build": "next build",
-    "start": "PORT=3000 next start",
+    "start": "PORT=8080 next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.12.7",
     "@real_one_chess_king/game-logic": "^0.2.2",
+    "classnames": "^2.5.1",
+    "graphql": "^16.10.0",
     "next": "15.0.3",
     "phaser": "^3.87.0",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
+    "react-hook-form": "^7.54.2",
     "socket.io-client": "^4.8.1"
   },
   "devDependencies": {

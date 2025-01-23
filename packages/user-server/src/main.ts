@@ -25,18 +25,16 @@ async function bootstrap() {
             "'self'",
             'http://localhost:3000',
             'http://127.0.0.1:3000',
+            'http://localhost:8080',
           ],
           defaultSrc: ["'self'"],
         },
       },
     }),
   );
-  // app.use(
-  //   csrf({
-  //     cookie: true,
-  //     origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
-  //   }),
-  // );
+  app.enableCors({
+    origin: 'http://localhost:8080',
+  });
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(process.env.USER_SERVER_PORT || 3000, '0.0.0.0');
 }

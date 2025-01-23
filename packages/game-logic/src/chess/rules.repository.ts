@@ -1,12 +1,12 @@
-import { Coordinate } from "@real_one_chess_king/game-logic";
-import { Color } from "@real_one_chess_king/game-logic";
-import { PieceType } from "@real_one_chess_king/game-logic";
+import { Coordinate } from "./coordinate";
+import { Color } from "./color";
+import { PieceType } from "./piece/piece.constants";
 import {
   MovementRules,
   PostMovementRules,
-} from "@real_one_chess_king/game-logic";
+} from "./rules/piece-movement/movement-rules.const";
 import { randomUUID } from "crypto";
-import { Direction } from "@real_one_chess_king/game-logic";
+import { Direction } from "./rules/piece-movement/movement-rule";
 
 export class RulesRepository {
   private pawnDefaultTransformationTypes = [
