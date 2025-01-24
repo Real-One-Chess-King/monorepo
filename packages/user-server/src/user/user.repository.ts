@@ -16,7 +16,7 @@ export class UserRepository {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const { password, email, salt } = createUserDto;
+    const { password, email, salt, nickName } = createUserDto;
 
     const createdUser = new this.userModel({
       pkey: randomUUID(),
@@ -24,6 +24,7 @@ export class UserRepository {
       password,
       salt,
       mmr: 2000,
+      nickName,
       statistics: {
         pkey: randomUUID(),
       },

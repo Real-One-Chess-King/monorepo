@@ -1,0 +1,56 @@
+{
+  "name": "@real_one_chess_king/game-server",
+  "version": "1.0.2",
+  "description": "",
+  "scripts": {
+    "prestart": "pnpm build:dev",
+    "start": "node dist/index.js",
+    "clean": "rimraf dist",
+    "build": "pnpm clean && tsc",
+    "build:dev": "pnpm clean && tsc --project tsconfig.dev.json",
+    "start:dev": "nodemon",
+    "start:dev-oldf": "tsx src/index",
+    "pretest": "pnpm clean",
+    "test": "echo no tests yet",
+    "eslint": "npx eslint 'src/**/*.ts'"
+  },
+  "author": "Eugene Perminov",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/http-errors": "^2.0.4",
+    "@types/jest": "^29.5.14",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@typescript-eslint/eslint-plugin": "^8.19.0",
+    "@typescript-eslint/parser": "^8.19.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-promise": "^6.6.0",
+    "globals": "^15.14.0",
+    "nodemon": "^3.1.9",
+    "prettier": "3.4.2",
+    "rimraf": "^6.0.1",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.19.0"
+  },
+  "dependencies": {
+    "@real_one_chess_king/game-logic": "^0.2.4",
+    "http-errors": "^2.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "latest": "link:@real_one_chess_king@game-logic/latest",
+    "socket.io": "^4.8.1"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.8",
+    "utf-8-validate": "^6.0.5"
+  }
+}

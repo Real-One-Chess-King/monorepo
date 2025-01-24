@@ -1,0 +1,33 @@
+# -----------------------
+# Development Stage
+# -----------------------
+  FROM node:20-alpine
+
+  # Install dependencies for building native modules (if needed)
+  RUN apk add --no-cache bash
+  
+  # Create a working directory inside the container
+  WORKDIR /app
+  
+  # Copy the root package files (for pnpm workspaces)
+  # COPY package.json package-lock.json ./
+  COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+
+  # Copy the server package.json
+  # COPY packages/game-server/package.json packages/game-server/
+  RUN mkdir -p packages/game-server
+  RUN mkdir -p packages/game-logic
+
+  # COPY .env packages/game-server/.env
+  COPY packages/game-server/package.json packages/game-server/package.json
+  COPY packages/game-logic/package.json packages/game-logic/package.json
+  COPY packages/game-server/nodemon.json packages/game-server/nodemon.json
+  COPY packages/game-server/tsconfig.base.json packages/game-server/tsconfig.base.json
+  COPY packages/game-server/tsconfig.dev.json packages/game-server/tsconfig.dev.json
+
+  RUN npm i pnpm -g
+
+  # Install dependencies (including devDependencies)
+  RUN pnpm install
+    
+  # RUN pnpm deploy --filter=game-server /packages/game-server

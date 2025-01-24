@@ -1,0 +1,7 @@
+{
+  "watch": ["./src"],
+  "exec": "tsx ./src/index.ts",
+  "ext": "ts",
+  "delay": 2000,
+  "verbose": true
+}

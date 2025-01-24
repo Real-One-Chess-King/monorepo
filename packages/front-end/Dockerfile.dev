@@ -1,0 +1,35 @@
+# -----------------------
+# Development Stage
+# -----------------------
+  FROM node:20-alpine
+
+  # Install dependencies for building native modules (if needed)
+  RUN apk add --no-cache bash
+  
+  # Create a working directory inside the container
+  WORKDIR /app
+  
+  # Copy the root package files (for pnpm workspaces)
+  # COPY package.json package-lock.json ./
+  COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+
+  # Copy the server package.json
+  # COPY packages/front-end/package.json packages/front-end/
+  RUN mkdir -p packages/front-end
+  RUN mkdir -p packages/game-logic
+
+  # COPY .env packages/front-end/.env
+  COPY packages/front-end/package.json packages/front-end/package.json
+  COPY packages/game-logic/package.json packages/game-logic/package.json
+  COPY packages/front-end/tsconfig.base.json packages/front-end/tsconfig.base.json
+  COPY packages/front-end/tsconfig.dev.json packages/front-end/tsconfig.dev.json
+  COPY packages/front-end/next.config.ts packages/front-end/next.config.ts
+  COPY packages/front-end/postcss.config.mjs packages/front-end/postcss.config.mjs
+  COPY packages/front-end/tailwind.config.ts packages/front-end/tailwind.config.ts
+
+  RUN npm i pnpm -g
+
+  # Install dependencies (including devDependencies)
+  RUN pnpm install
+    
+  # RUN pnpm deploy --filter=front-end /packages/front-end

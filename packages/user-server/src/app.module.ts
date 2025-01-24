@@ -6,7 +6,6 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
-import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 // import * as Joi from 'joi';
@@ -37,12 +36,18 @@ import * as mongooseAutopopulate from 'mongoose-autopopulate'; // Import the plu
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
-      context: ({ req }) => ({ req }), // by default gql doesn include req and passport becomes broken
-      playground: false,
-      plugins:
-        process.env.NODE_ENV === 'production'
-          ? [ApolloServerPluginLandingPageLocalDefault()]
-          : [],
+      context: ({ req }) => {
+        // console.log('req.headers', req.headers);
+        // const operationName =
+        //   req.headers['x-apollo-operation-name'] || 'defaultOperation';
+        // req.headers['x-apollo-operation-name'] = operationName;
+        return { req };
+      }, // by default gql doesn include req and passport becomes broken
+      playground: process.env.NODE_ENV !== 'production',
+      // plugins:
+      //   process.env.NODE_ENV === 'production'
+      //     ? [ApolloServerPluginLandingPageLocalDefault()]
+      //     : [],
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],

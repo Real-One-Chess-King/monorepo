@@ -1,10 +1,28 @@
 {
-  "name": "real-one-chess-king",
+  "name": "real_one_chess_king",
   "version": "1.0.0",
-  "description": "",
+  "description": "Chess platform",
   "private": true,
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "start:dev:game-server": "pnpm --filter=@real_one_chess_king/game-server start:dev",
+    "start:dev:front-end": "pnpm --filter=@real_one_chess_king/front-end start:dev",
+    "start:dev:user-server": "pnpm --filter=@real_one_chess_king/user-server start:dev",
+    "build:game-server": "pnpm --filter=@real_one_chess_king/game-server build",
+    "build:front-end": "pnpm --filter=@real_one_chess_king/front-end build",
+    "build:user-server": "pnpm --filter=@real_one_chess_king/user-server build",
+    "build:game-logic": "pnpm --filter=@real_one_chess_king/game-logic build",
+    "test:game-server": "pnpm --filter=@real_one_chess_king/game-server test",
+    "test:front-end": "pnpm --filter=@real_one_chess_king/front-end test",
+    "test:user-server": "pnpm --filter=@real_one_chess_king/user-server test",
+    "test:game-logic": "pnpm --filter=@real_one_chess_king/game-logic test",
+    "test:all": "concurrently \"pnpm test:game-server\" \"pnpm test:front-end\" \"pnpm test:user-server\" \"pnpm test:game-logic\""
+  },
   "workspaces": [
     "packages/*"
   ],
-  "author": "Eugene Perminov"
+  "author": "Eugene Perminov",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
 }

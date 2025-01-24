@@ -21,11 +21,21 @@ async function bootstrap() {
             'apollo-server-landing-page.cdn.apollographql.com',
           ],
           frameSrc: [`'self'`, 'sandbox.embed.apollographql.com'],
+          connectSrc: [
+            "'self'",
+            'http://localhost:3000',
+            'http://127.0.0.1:3000',
+            'http://localhost:8080',
+          ],
+          defaultSrc: ["'self'"],
         },
       },
     }),
   );
+  app.enableCors({
+    origin: 'http://localhost:8080',
+  });
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.USER_SERVER_PORT || 3000, '0.0.0.0');
 }
 bootstrap();

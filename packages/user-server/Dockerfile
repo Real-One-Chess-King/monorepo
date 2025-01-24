@@ -19,7 +19,7 @@
   COPY . .
   
   # Build just the server workspace
-  RUN npm run build --workspace=@real-one-chess-king/user-server
+  RUN npm run build --workspace=@real_one_chess_king/user-server
   
   # -----------------------
   # 2. RUNTIME STAGE

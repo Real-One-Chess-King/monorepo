@@ -9,27 +9,25 @@
   # Create a working directory inside the container
   WORKDIR /app
   
-  # Copy the root package files (for npm workspaces)
-  COPY package.json package-lock.json ./
-  
+  # Copy the root package files (for pnpm workspaces)
+  # COPY package.json package-lock.json ./
+  COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+
   # Copy the server package.json
-  COPY packages/user-server/package.json packages/user-server/
-  
+  # COPY packages/user-server/package.json packages/user-server/
+  RUN mkdir -p packages/user-server
+  RUN mkdir -p packages/game-logic
+
+  # COPY .env packages/user-server/.env
+  COPY packages/user-server/package.json packages/user-server/package.json
+  COPY packages/game-logic/package.json packages/game-logic/package.json
+  COPY packages/user-server/tsconfig.base.json packages/user-server/tsconfig.base.json
+  COPY packages/user-server/tsconfig.dev.json packages/user-server/tsconfig.dev.json
+  COPY packages/user-server/nest-cli.dev.json packages/user-server/nest-cli.dev.json
+
+  RUN npm i pnpm -g
+
   # Install dependencies (including devDependencies)
-  RUN npm install
-  
-  # Copy all source code into the container
-  COPY . .
-  
-  # Install nodemon globally for hot reloading
-  RUN npm install -g nodemon
-  
-  # Expose NestJS port
-  EXPOSE 3000
-  
-  # Set environment variable to development
-  ENV NODE_ENV=development
-  
-  # Command to run the server in development mode with hot reloading
-  CMD ["nodemon", "--watch", "packages/user-server/src", "--exec", "npm run start:dev --workspace=@real-one-chess-king/user-server"]
-  
+  RUN pnpm install
+    
+  # RUN pnpm deploy --filter=user-server /packages/user-server
