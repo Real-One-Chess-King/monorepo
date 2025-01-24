@@ -10,9 +10,10 @@
   },
   "dependencies": {
     "@apollo/client": "^3.12.7",
-    "@real_one_chess_king/game-logic": "^0.2.2",
+    "@real_one_chess_king/game-logic": "^0.2.4",
     "classnames": "^2.5.1",
     "graphql": "^16.10.0",
+    "http-errors": "^2.0.0",
     "next": "15.0.3",
     "phaser": "^3.87.0",
     "react": "19.0.0-rc-66855b96-20241106",
@@ -21,6 +22,7 @@
     "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
+    "@types/http-errors": "^2.0.4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

@@ -1,5 +1,6 @@
 "use client";
 
+import { HttpError } from "http-errors";
 import React from "react";
 
 type GameStatusBarProps = {
@@ -12,6 +13,7 @@ type GameStatusBarProps = {
   showMySurrender: boolean;
   showOpponentTimeOut: boolean;
   showMyTimeOut: boolean;
+  connectionError: null | HttpError;
 };
 
 export function GameStatusBar({
@@ -24,28 +26,42 @@ export function GameStatusBar({
   showMySurrender,
   showOpponentTimeOut,
   showMyTimeOut,
+  connectionError,
 }: GameStatusBarProps) {
+  console.log(connectionError);
+
   return (
     <div>
-      {!isConnected && <p>Connecting...</p>}
-      {showWinMessage && <p>You won! +respect ^^.</p>}
-      {showOpponentWon && <p>You lost! -respect :| </p>}
+      {!isConnected && !connectionError && <p>Connecting...</p>}
+      {showWinMessage && <p>You won! +respect ^^</p>}
+      {showOpponentWon && <p>You lost! -respect :|</p>}
       {showOponentDisconnected && (
         <div>
           <p>Opponent disconnected :| But You won! :D</p>
-          <p>Let&#39;s try again</p>
+          <p>Let's try again</p>
         </div>
       )}
       {showInQueueMessage && <p>Waiting for opponent...</p>}
       {showOpponentSurrender && <p>Opponent surrendered! You won! :D</p>}
       {showMySurrender && (
         <p>
-          You surrender. Opponent won. The Battle has been lost, but this is
-          only beginning.
+          You surrendered. Opponent won. The battle has been lost, but this is
+          only the beginning.
         </p>
       )}
-      {showOpponentTimeOut && <p>Opponent time out! You won! :D</p>}
-      {showMyTimeOut && <p>Your time out! Opponent won! :|</p>}
+      {showOpponentTimeOut && <p>Opponent timed out! You won! :D</p>}
+      {showMyTimeOut && <p>You timed out! Opponent won! :|</p>}
+      {connectionError?.data ? (
+        <>
+          {connectionError.data.status === 409 && (
+            <p>You are already connected somewhere in another tab</p>
+          )}
+          {(connectionError.data.status === 401 ||
+            connectionError.data.status === 400) && <p>Authentication error</p>}
+        </>
+      ) : (
+        connectionError && <p>Connection error</p>
+      )}
     </div>
   );
 }

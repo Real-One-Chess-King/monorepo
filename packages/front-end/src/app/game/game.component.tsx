@@ -72,9 +72,9 @@ const GameComponent = ({
   }, [gameInfo]);
 
   const myColor = gameInfo.yourColor;
-  const myName = gameInfo.players[myColor].name;
+  const myName = gameInfo.players[myColor].nickName;
   const opponentColor = reverseColor(myColor);
-  const opponentName = gameInfo.players[opponentColor].name;
+  const opponentName = gameInfo.players[opponentColor].nickName;
   const opponentTimeLeft = gameInfo.timeLeft[opponentColor];
   const myTimeLeft = gameInfo.timeLeft[myColor];
   const myColorWhite = myColor === Color.white;

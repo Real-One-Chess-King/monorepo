@@ -7,13 +7,18 @@ import TurnInfoComponent from "./components/turn-info.component";
 import { NewGameData } from "./game.component";
 import { GameStatusBar } from "./components/game-status-bar.component";
 import { SurrenderButton } from "./components/surrender.button";
+import { AuthProvider } from "../authorised.provider";
+import { HttpError } from "http-errors";
 
 const DynamicGameComponent = dynamic(() => import("./game.component"), {
   loading: () => <p>Loading...</p>,
 });
 
 export default function GamePage() {
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState<boolean>(false);
+  const [connectionError, setConnectionError] = useState<null | HttpError>(
+    null
+  );
   const [opponentDisconnected, setOpponentDisconnected] = useState(false);
   const [isWon, setWin] = useState(false);
   const [isLost, setLost] = useState(false);
@@ -58,30 +63,49 @@ export default function GamePage() {
   useEffect(() => {
     console.log("CONNECTING");
     const initConnection = async () => {
-      await wsClientInstance.connect();
-      setIsConnected(true);
+      try {
+        const socket = await wsClientInstance.connect();
+        setIsConnected(true);
+        setConnectionError(null);
+
+        socket.on("disconnect", () => {
+          setIsConnected(false);
+        });
+
+        wsClientInstance.subscribeOnOpponentDisconnected(
+          onOpponentDisconnected
+        );
+        wsClientInstance.subscribeOnWinEvent(onWin);
+        wsClientInstance.subscribeOnLostEvent(onLost);
+        wsClientInstance.subscribeOnOpponentSurrender(onOpponentSurrender);
+        wsClientInstance.subscribeOnSurrenderConfirmed(onSurrenderConfirmed);
+        wsClientInstance.subscribeOnOpponentTimeOut(onOpponentTimeOut);
+        wsClientInstance.subscribeOnYourTimeOut(onMyTimeOut);
+      } catch (error) {
+        // Handle the error if connection fails
+        // console.error("Connection failed:", error);
+        // Optionally, set some state for error handling, e.g., show a message to the user
+        setConnectionError(error as HttpError);
+        // You can also trigger a user notification or retry logic here if needed
+      }
     };
 
     initConnection();
-    wsClientInstance.subscribeOnOpponentDisconnected(onOpponentDisconnected);
-    wsClientInstance.subscribeOnWinEvent(onWin);
-    wsClientInstance.subscribeOnLostEvent(onLost);
-    wsClientInstance.subscribeOnOpponentSurrender(onOpponentSurrender);
-    wsClientInstance.subscribeOnSurrenderConfirmed(onSurrenderConfirmed);
-    wsClientInstance.subscribeOnOpponentTimeOut(onOpponentTimeOut);
-    wsClientInstance.subscribeOnYourTimeOut(onMyTimeOut);
+
     return () => {
-      wsClientInstance.unsubscribeOnOpponentDisconnected(
-        onOpponentDisconnected
-      );
-      wsClientInstance.unsubscribeOnWinEvent(onWin);
-      wsClientInstance.unsubscribeOnLostEvent(onLost);
-      wsClientInstance.unsubscribeOnWaitingForOpponent(onInQueue);
-      wsClientInstance.unsubscribeOnGameStarted(onGameFound);
-      wsClientInstance.unsubscribeOnOpponentSurrender(onOpponentSurrender);
-      wsClientInstance.unsubscribeOnSurrenderConfirmed(onSurrenderConfirmed);
-      wsClientInstance.subscribeOnOpponentTimeOut(onOpponentTimeOut);
-      wsClientInstance.subscribeOnYourTimeOut(onMyTimeOut);
+      if (isConnected) {
+        wsClientInstance.unsubscribeOnOpponentDisconnected(
+          onOpponentDisconnected
+        );
+        wsClientInstance.unsubscribeOnWinEvent(onWin);
+        wsClientInstance.unsubscribeOnLostEvent(onLost);
+        wsClientInstance.unsubscribeOnWaitingForOpponent(onInQueue);
+        wsClientInstance.unsubscribeOnGameStarted(onGameFound);
+        wsClientInstance.unsubscribeOnOpponentSurrender(onOpponentSurrender);
+        wsClientInstance.unsubscribeOnSurrenderConfirmed(onSurrenderConfirmed);
+        wsClientInstance.subscribeOnOpponentTimeOut(onOpponentTimeOut);
+        wsClientInstance.subscribeOnYourTimeOut(onMyTimeOut);
+      }
     };
   }, []);
 
@@ -110,37 +134,40 @@ export default function GamePage() {
     !isOpponentSurrender;
 
   return (
-    <div className="grid items-center justify-items-center min-h-screen p-8 pb-5 sm:p-5 font-[family-name:var(--font-geist-sans)]">
-      {showFindButton && (
-        <button
-          onClick={findGame}
-          className="bg-[#f5f5f5] text-[#333] px-4 py-2 rounded-lg shadow-md"
-        >
-          Find Game
-        </button>
-      )}
-      <GameStatusBar
-        isConnected={isConnected}
-        showOponentDisconnected={showOponentDisconnected}
-        showInQueueMessage={showInQueueMessage}
-        showWinMessage={isWon}
-        showOpponentWon={isLost}
-        showOpponentSurrender={isOpponentSurrender}
-        showMySurrender={isMeSurrender}
-        showMyTimeOut={myTimeOut}
-        showOpponentTimeOut={opponentTimeOut}
-      />
-      {onlyBoardVisible && (
-        <React.Fragment>
-          {/* Add stalemate handling */}
-          {gameInProgress && (
-            <TurnInfoComponent myColor={gameData.gameInfo.yourColor} />
-          )}
-          <DynamicGameComponent gameData={gameData} />
-          {gameInProgress && <SurrenderButton />}
-        </React.Fragment>
-      )}
-    </div>
+    <AuthProvider>
+      <div className="grid items-center justify-items-center min-h-screen p-8 pb-5 sm:p-5 font-[family-name:var(--font-geist-sans)]">
+        {showFindButton && (
+          <button
+            onClick={findGame}
+            className="bg-[#f5f5f5] text-[#333] px-4 py-2 rounded-lg shadow-md"
+          >
+            Find Game
+          </button>
+        )}
+        <GameStatusBar
+          isConnected={isConnected}
+          showOponentDisconnected={showOponentDisconnected}
+          showInQueueMessage={showInQueueMessage}
+          showWinMessage={isWon}
+          showOpponentWon={isLost}
+          showOpponentSurrender={isOpponentSurrender}
+          showMySurrender={isMeSurrender}
+          showMyTimeOut={myTimeOut}
+          showOpponentTimeOut={opponentTimeOut}
+          connectionError={connectionError}
+        />
+        {onlyBoardVisible && (
+          <React.Fragment>
+            {/* Add stalemate handling */}
+            {gameInProgress && (
+              <TurnInfoComponent myColor={gameData.gameInfo.yourColor} />
+            )}
+            <DynamicGameComponent gameData={gameData} />
+            {gameInProgress && <SurrenderButton />}
+          </React.Fragment>
+        )}
+      </div>
+    </AuthProvider>
   );
 }
 GamePage.strictMode = false;

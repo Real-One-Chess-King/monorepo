@@ -4,4 +4,6 @@ export class CreateUserDto {
   password: string;
 
   salt: string;
+
+  nickName: string;
 }

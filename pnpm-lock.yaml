@@ -18,14 +18,17 @@ importers:
         specifier: ^3.12.7
         version: 3.12.7(@types/react@18.3.18)(graphql-ws@5.16.0(graphql@16.10.0))(graphql@16.10.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)(subscriptions-transport-ws@0.11.0(bufferutil@4.0.9)(graphql@16.10.0)(utf-8-validate@6.0.5))
       '@real_one_chess_king/game-logic':
-        specifier: ^0.2.2
-        version: 0.2.2
+        specifier: ^0.2.4
+        version: 0.2.4
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
       graphql:
         specifier: ^16.10.0
         version: 16.10.0
+      http-errors:
+        specifier: ^2.0.0
+        version: 2.0.0
       next:
         specifier: 15.0.3
         version: 15.0.3(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
@@ -45,6 +48,9 @@ importers:
         specifier: ^4.8.1
         version: 4.8.1(bufferutil@4.0.9)(utf-8-validate@6.0.5)
     devDependencies:
+      '@types/http-errors':
+        specifier: ^2.0.4
+        version: 2.0.4
       '@types/node':
         specifier: ^20
         version: 20.17.12
@@ -181,8 +187,14 @@ importers:
   packages/game-server:
     dependencies:
       '@real_one_chess_king/game-logic':
-        specifier: ^0.2.3
-        version: 0.2.3
+        specifier: ^0.2.4
+        version: 0.2.4
+      http-errors:
+        specifier: ^2.0.0
+        version: 2.0.0
+      jsonwebtoken:
+        specifier: ^9.0.2
+        version: 9.0.2
       latest:
         specifier: link:@real_one_chess_king@game-logic/latest
         version: link:@real_one_chess_king@game-logic/latest
@@ -200,9 +212,15 @@ importers:
       '@eslint/js':
         specifier: ^9.17.0
         version: 9.18.0
+      '@types/http-errors':
+        specifier: ^2.0.4
+        version: 2.0.4
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
+      '@types/jsonwebtoken':
+        specifier: ^9.0.7
+        version: 9.0.7
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.19.0
         version: 8.19.1(@typescript-eslint/parser@8.19.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3)
@@ -1446,11 +1464,8 @@ packages:
   '@protobufjs/utf8@1.1.0':
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
 
-  '@real_one_chess_king/game-logic@0.2.2':
-    resolution: {integrity: sha512-oRZeWPoTxO86Qp/gWGJ2uHqqC+2/aqVEvJshxf5Hv4OBLTXVKNL7iOv+z91K0wlQgKLDI3glOA8JU8mcFtlWIw==}
-
-  '@real_one_chess_king/game-logic@0.2.3':
-    resolution: {integrity: sha512-TSU16Wjq0C9jqBDI4Byl5eJpOK/GSMHcv7d4P0q4LFPY3SKotO8UpYxC49/XqLOhn8XN83MlXFLTPysNKMtqYg==}
+  '@real_one_chess_king/game-logic@0.2.4':
+    resolution: {integrity: sha512-Q9nvBIXETBc6GDr+8OXnJXx7i3KWlDjgXBT6QOZxlZqQl3EPx6HMAwLDlIgJHwjfy6OeP4nuqpjYObTvH2Mx8w==}
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
@@ -1583,6 +1598,9 @@ packages:
 
   '@types/jsonwebtoken@9.0.5':
     resolution: {integrity: sha512-VRLSGzik+Unrup6BsouBeHsf4d1hOEgYWTm/7Nmw1sXoN1+tRly/Gy/po3yeahnP4jfnQWWAhQAqcNfH7ngOkA==}
+
+  '@types/jsonwebtoken@9.0.7':
+    resolution: {integrity: sha512-ugo316mmTYBl2g81zDFnZ7cfxlut3o+/EQdaP7J8QN2kY6lJ22hmQYCK5EHcJHbrW+dkCGSCPgbG8JtYj6qSrg==}
 
   '@types/long@4.0.2':
     resolution: {integrity: sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==}
@@ -6482,9 +6500,7 @@ snapshots:
 
   '@protobufjs/utf8@1.1.0': {}
 
-  '@real_one_chess_king/game-logic@0.2.2': {}
-
-  '@real_one_chess_king/game-logic@0.2.3': {}
+  '@real_one_chess_king/game-logic@0.2.4': {}
 
   '@rtsao/scc@1.1.0': {}
 
@@ -6645,6 +6661,10 @@ snapshots:
   '@types/json5@0.0.29': {}
 
   '@types/jsonwebtoken@9.0.5':
+    dependencies:
+      '@types/node': 20.17.12
+
+  '@types/jsonwebtoken@9.0.7':
     dependencies:
       '@types/node': 20.17.12
 

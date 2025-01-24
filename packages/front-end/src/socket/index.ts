@@ -4,6 +4,7 @@ import {
   WSServerGameEvent,
 } from "@real_one_chess_king/game-logic";
 import { io, Socket } from "socket.io-client";
+import jwtStorage from "../storage/jwt-storage";
 
 let socket: Socket;
 
@@ -12,17 +13,34 @@ type Listener = (...args: any[]) => void;
 
 class WSClient {
   connect() {
-    return new Promise<void>((resolve) => {
+    const jwt = jwtStorage.getJwt();
+    if (!jwt) {
+      throw new Error("JWT is not set");
+    }
+    return new Promise<Socket>((resolve, reject) => {
       const URL =
         process.env.NODE_ENV === "production"
           ? undefined
           : process.env.GAME_SERVER_URL;
-      socket = io(URL);
+      socket = io(URL, {
+        extraHeaders: {
+          Authorization: `Bearer ${jwt}`,
+        },
+        // transports: ["websocket"],
+      });
 
       console.log("begin conection!");
       socket.on("connect", () => {
         console.log("connected");
-        resolve();
+        resolve(socket);
+      });
+      socket.on("connect_error", (error) => {
+        console.log("connect error", error);
+        reject(error);
+      });
+      socket.on("error", (error) => {
+        console.log("WS error", error);
+        reject(error);
       });
     });
   }

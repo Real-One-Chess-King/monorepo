@@ -1,3 +1,7 @@
+# 0.2.4
+
+Improve player data
+
 # 0.2.3
 
 Export new entities

@@ -27,25 +27,20 @@ const LoginComponent = () => {
   }, []);
 
   const onSubmit = async ({ email, password }: LoginFormValues) => {
-    try {
-      const result = await login({
-        variables: {
-          signInInput: {
-            email,
-            password,
-          },
+    const result = await login({
+      variables: {
+        signInInput: {
+          email,
+          password,
         },
-      });
-      const { accessToken } = result.data.signIn;
-      jwtStorage.setJwt(accessToken);
-      if (callbackUrl) {
-        router.push(callbackUrl);
-      } else {
-        router.push("/game");
-      }
-    } catch (error: unknown) {
-      console.log(error);
-      throw error;
+      },
+    });
+    const { accessToken } = result.data.signIn;
+    jwtStorage.setJwt(accessToken);
+    if (callbackUrl) {
+      router.push(callbackUrl);
+    } else {
+      router.push("/game");
     }
   };
 

@@ -3,7 +3,10 @@ import { RuleMeta } from "./rules/piece-movement/rules";
 import { Board } from "./board";
 import { BoardMeta } from "./board";
 import { PieceMeta } from "./piece/piece.types";
-import { CheckMateGlobalRule } from "./rules/global/check-mate.global-rule";
+import {
+  CheckMateGlobalRule,
+  GlobalRule,
+} from "./rules/global/check-mate.global-rule";
 import { RulesRepository } from "./rules.repository";
 import { PostMovementRuleMeta } from "./rules/piece-post-movement";
 import { Coordinate } from "./coordinate";
@@ -19,7 +22,7 @@ export type RulesMeta = {
 };
 
 export class GameInitializer {
-  getDefaultGlobalRules() {
+  getDefaultGlobalRules(): GlobalRule[] {
     return [new CheckMateGlobalRule()];
   }
 

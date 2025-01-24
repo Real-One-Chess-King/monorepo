@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
 import { Board } from "@real_one_chess_king/game-logic";
 import { Game, Player } from "@real_one_chess_king/game-logic";
-import { GameInitializer } from "../../game-logic/src/chess/game-initializer"; // this thhing will be refactored
+import { GameInitializer } from "@real_one_chess_king/game-logic"; // this thhing will be refactored
 import { Color } from "@real_one_chess_king/game-logic";
 
 type QueueItem = {
@@ -65,4 +65,16 @@ export class Matchmaker {
       opponentSocket: opponent.socket,
     };
   }
+
+  // public handleSocketEvents(socket: Socket) {
+  //   socket.on("connect_error", (err) => {
+  //     console.log(`connect_error due to ${err.message}`);
+  //     this.removeSocketFromQueue(socket.id);
+  //   });
+
+  //   socket.on("disconnect", (reason) => {
+  //     console.log(`disconnect due to ${reason}`);
+  //     this.removeSocketFromQueue(socket.id);
+  //   });
+  // }
 }

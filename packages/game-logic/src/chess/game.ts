@@ -11,11 +11,14 @@ import { Action } from "./affect/affect.types";
 import { Timer } from "./timer";
 
 export class Player {
-  constructor(public name: string) {}
+  constructor(
+    public pkey: string,
+    public nickName: string
+  ) {}
 }
 
 export type NewPlayerGameData = {
-  players: { [key in Color]: { name: string } };
+  players: { [key in Color]: Player };
   yourColor: Color;
   timeStart: string;
   timeLeft: { [key in Color]: number };
@@ -141,8 +144,8 @@ export class Game {
   getNewGameInfoForColor(color: Color): NewPlayerGameData {
     return {
       players: {
-        [Color.white]: { name: this.white.name },
-        [Color.black]: { name: this.black.name },
+        [Color.white]: this.white,
+        [Color.black]: this.black,
       },
       yourColor: color,
       timeStart: this.timeStart,

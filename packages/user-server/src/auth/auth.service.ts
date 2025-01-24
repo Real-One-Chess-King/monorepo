@@ -5,6 +5,7 @@ import { hash, genSalt } from 'bcryptjs';
 import { UserRepository } from '../user/user.repository';
 import { SignInDto } from './dto/sign-in.dto';
 import { TokenDto } from './dto/token.dto';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -19,12 +20,14 @@ export class AuthService {
     const { email, password } = signUpDto;
     const salt = await genSalt();
     const hashedPassword = await hash(password, salt);
+    const nickName = `Kaban_${randomUUID()}`;
     const { pkey } = await this.userRepository.create({
       email,
       password: hashedPassword,
       salt,
+      nickName,
     });
-    const { accessToken } = await this.generateJwt({ email, pkey });
+    const { accessToken } = await this.generateJwt({ email, pkey, nickName });
     return {
       accessToken,
       pkey,
@@ -45,6 +48,7 @@ export class AuthService {
     const { accessToken } = await this.generateJwt({
       email: user.email,
       pkey: user.pkey,
+      nickName: user.nickName,
     });
     return { accessToken, pkey: user.pkey };
   }
@@ -52,7 +56,7 @@ export class AuthService {
   // utils
 
   async generateJwt(payload: JwtPayload): Promise<{ accessToken: string }> {
-    const accessToken = this.jwtService.sign(payload);
+    const accessToken = this.jwtService.sign({ payload });
     return { accessToken };
   }
 

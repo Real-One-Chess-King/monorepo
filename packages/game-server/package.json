@@ -18,7 +18,9 @@
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@types/http-errors": "^2.0.4",
     "@types/jest": "^29.5.14",
+    "@types/jsonwebtoken": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^8.19.0",
     "@typescript-eslint/parser": "^8.19.0",
     "eslint": "^8.57.1",
@@ -41,7 +43,9 @@
     "typescript-eslint": "^8.19.0"
   },
   "dependencies": {
-    "@real_one_chess_king/game-logic": "^0.2.3",
+    "@real_one_chess_king/game-logic": "^0.2.4",
+    "http-errors": "^2.0.0",
+    "jsonwebtoken": "^9.0.2",
     "latest": "link:@real_one_chess_king@game-logic/latest",
     "socket.io": "^4.8.1"
   },
